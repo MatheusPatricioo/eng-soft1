@@ -56,5 +56,4 @@ O Sistema de Coleta de Dados de Ocupação de Hospedagens é uma aplicação web
 - **Design Responsivo** - Compatibilidade com dispositivos móveis
 - **Padrão MVC** - Organização do código seguindo boas práticas[13]
 
-## 📁 Estrutura do Projeto
 
