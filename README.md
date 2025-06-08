@@ -17,12 +17,10 @@ O Sistema de Coleta de Dados de Ocupação de Hospedagens é uma aplicação web
 
 ## 👥 Equipe de Desenvolvimento
 
-| Nome | Função |
-|------|--------|
-| **Matheus Patricio** | Desenvolvedor Full-Stack |
-| **Ruberpaulo Marcus** | Desenvolvedor Frontend |
-| **Clara** | Analista de Sistemas |
-| **Jefferson C.** | Desenvolvedor Backend |
+ **Matheus Patricio**
+ **Ruberpaulo Marcus**
+ **Clara Barbi**
+ **Jefferson C.**
 
 **Professor Orientador:** Edson  
 **Disciplina:** Engenharia de Software 1  
