@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Coleta de Dados - Relatórios de Hospedagens</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="relatorios-hospedagens.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-hotel"></i>
+                <h1>Sistema de Coleta de Dados</h1>
+            </div>
+            <div class="user-info">
+                <span>Bem-vindo, Admin</span>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="page-header">
+                <h2><i class="fas fa-chart-line"></i> Relatórios de Hospedagens</h2>
+                <p class="subtitle">Análise e visualização dos dados de ocupação</p>
+            </div>
+
+            <!-- Filtros de Relatório -->
+            <div class="filters-section">
+                <div class="filter-card">
+                    <div class="filter-header">
+                        <h3><i class="fas fa-filter"></i> Filtros do Relatório</h3>
+                    </div>
+                    <div class="filter-content">
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label for="hospedagemFilter">Hospedagem</label>
+                                <select id="hospedagemFilter" multiple>
+                                    <option value="1">Hotel Belo Horizonte Centro</option>
+                                    <option value="2">Pousada Serra Verde</option>
+                                    <option value="3">Resort Águas Claras</option>
+                                    <option value="4">Hostel Downtown</option>
+                                </select>
+                                <small>Ctrl+Click para múltipla seleção</small>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label for="tipoFilter">Tipo de Hospedagem</label>
+                                <select id="tipoFilter">
+                                    <option value="">Todos os tipos</option>
+                                    <option value="hotel">Hotel</option>
+                                    <option value="pousada">Pousada</option>
+                                    <option value="resort">Resort</option>
+                                    <option value="hostel">Hostel</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label for="periodoFilter">Período</label>
+                                <select id="periodoFilter">
+                                    <option value="7">Últimos 7 dias</option>
+                                    <option value="30">Últimos 30 dias</option>
+                                    <option value="90">Últimos 3 meses</option>
+                                    <option value="365">Último ano</option>
+                                    <option value="custom">Personalizado</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-row" id="customDateRow" style="display: none;">
+                            <div class="filter-group">
+                                <label for="dataInicio">Data Início</label>
+                                <input type="date" id="dataInicio">
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label for="dataFim">Data Fim</label>
+                                <input type="date" id="dataFim">
+                            </div>
+                            
+                            <div class="filter-group">
+                                <button type="button" class="btn-generate" onclick="gerarRelatorio()">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Gerar Relatório
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <button type="button" class="btn-generate" onclick="gerarRelatorio()">
+                                <i class="fas fa-chart-bar"></i>
+                                Gerar Relatório
+                            </button>
+                            
+                            <button type="button" class="btn-export" onclick="exportarRelatorio()">
+                                <i class="fas fa-download"></i>
+                                Exportar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo Executivo -->
+            <div class="summary-section" id="summarySection" style="display: none;">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-value" id="taxaMediaOcupacao">0%</div>
+                            <div class="card-label">Taxa Média de Ocupação</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-value" id="totalHospedes">0</div>
+                            <div class="card-label">Total de Hóspedes</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-value" id="quartosOcupados">0</div>
+                            <div class="card-label">Quartos Ocupados</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-value" id="receitaMedia">R$ 0</div>
+                            <div class="card-label">Receita Média</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="charts-section" id="chartsSection" style="display: none;">
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-line-chart"></i> Evolução da Ocupação</h3>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="occupancyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-pie-chart"></i> Distribuição por Tipo</h3>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="typeChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-bar-chart"></i> Comparativo de Hospedagens</h3>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-calendar-alt"></i> Sazonalidade</h3>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="seasonalityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela Detalhada -->
+            <div class="table-section" id="tableSection" style="display: none;">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3><i class="fas fa-table"></i> Dados Detalhados</h3>
+                        <div class="table-actions">
+                            <button type="button" class="btn-table-export">
+                                <i class="fas fa-file-excel"></i>
+                                Excel
+                            </button>
+                            <button type="button" class="btn-table-export">
+                                <i class="fas fa-file-pdf"></i>
+                                PDF
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-content">
+                        <div class="table-responsive">
+                            <table id="detailedTable">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Hospedagem</th>
+                                        <th>Tipo</th>
+                                        <th>Capacidade</th>
+                                        <th>Ocupados</th>
+                                        <th>Taxa (%)</th>
+                                        <th>Hóspedes</th>
+                                        <th>Check-ins</th>
+                                        <th>Check-outs</th>
+                                        <th>Tarifa Média</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    <!-- Dados serão inseridos via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Análises e Insights -->
+            <div class="insights-section" id="insightsSection" style="display: none;">
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <h3><i class="fas fa-lightbulb"></i> Insights Principais</h3>
+                        </div>
+                        <div class="insight-content">
+                            <div class="insight-item">
+                                <i class="fas fa-arrow-up text-success"></i>
+                                <span>Maior ocupação registrada em fins de semana</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                                <span>Queda de 15% na ocupação durante a semana</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-star text-info"></i>
+                                <span>Resort Águas Claras lidera em taxa de ocupação</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <div class="insight-header">
+                            <h3><i class="fas fa-target"></i> Recomendações</h3>
+                        </div>
+                        <div class="insight-content">
+                            <div class="insight-item">
+                                <i class="fas fa-bullseye text-primary"></i>
+                                <span>Implementar estratégias para dias de semana</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-calendar-check text-success"></i>
+                                <span>Otimizar preços para períodos de baixa ocupação</span>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-users text-info"></i>
+                                <span>Focar em hospedagens com menor performance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="relatorios-hospedagens.js"></script>
+</body>
+</html>

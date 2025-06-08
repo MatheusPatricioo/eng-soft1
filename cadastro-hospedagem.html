@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Coleta de Dados - Cadastrar Hospedagem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="cadastro-hospedagem.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-hotel"></i>
+                <h1>Sistema de Coleta de Dados</h1>
+            </div>
+            <div class="user-info">
+                <span>Bem-vindo, Admin</span>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="page-header">
+                <h2><i class="fas fa-plus-circle"></i> Cadastrar Nova Hospedagem</h2>
+                <p class="subtitle">Registre uma nova propriedade para coleta de dados de ocupação</p>
+            </div>
+
+            <div class="form-container">
+                <form id="hospedagemForm" class="hospedagem-form">
+                    <div class="form-sections">
+                        <!-- Informações Básicas -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-info-circle"></i> Informações Básicas</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nome">Nome da Hospedagem *</label>
+                                    <input type="text" id="nome" name="nome" placeholder="Ex: Hotel Belo Horizonte Centro" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="tipo">Tipo de Hospedagem *</label>
+                                    <select id="tipo" name="tipo" required>
+                                        <option value="">Selecione o tipo</option>
+                                        <option value="hotel">Hotel</option>
+                                        <option value="pousada">Pousada</option>
+                                        <option value="resort">Resort</option>
+                                        <option value="hostel">Hostel</option>
+                                        <option value="apart-hotel">Apart-Hotel</option>
+                                        <option value="flat">Flat</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="categoria">Categoria</label>
+                                    <select id="categoria" name="categoria">
+                                        <option value="">Selecione a categoria</option>
+                                        <option value="1-estrela">1 Estrela</option>
+                                        <option value="2-estrelas">2 Estrelas</option>
+                                        <option value="3-estrelas">3 Estrelas</option>
+                                        <option value="4-estrelas">4 Estrelas</option>
+                                        <option value="5-estrelas">5 Estrelas</option>
+                                        <option value="luxo">Luxo</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="capacidade">Capacidade Total *</label>
+                                    <input type="number" id="capacidade" name="capacidade" placeholder="Número de quartos/unidades" min="1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Localização -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-map-marker-alt"></i> Localização</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="endereco">Endereço Completo *</label>
+                                    <input type="text" id="endereco" name="endereco" placeholder="Rua, número, complemento" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="bairro">Bairro *</label>
+                                    <input type="text" id="bairro" name="bairro" placeholder="Nome do bairro" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="cidade">Cidade *</label>
+                                    <input type="text" id="cidade" name="cidade" placeholder="Nome da cidade" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="estado">Estado *</label>
+                                    <select id="estado" name="estado" required>
+                                        <option value="">Selecione</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <!-- Adicione outros estados conforme necessário -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cep">CEP</label>
+                                    <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="regiao">Região Turística</label>
+                                    <input type="text" id="regiao" name="regiao" placeholder="Ex: Centro Histórico, Zona Sul">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contato e Responsável -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-user-tie"></i> Contato e Responsável</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="responsavel">Nome do Responsável *</label>
+                                    <input type="text" id="responsavel" name="responsavel" placeholder="Nome completo do responsável" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="cargo">Cargo</label>
+                                    <input type="text" id="cargo" name="cargo" placeholder="Ex: Gerente, Proprietário">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="telefone">Telefone *</label>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">E-mail *</label>
+                                    <input type="email" id="email" name="email" placeholder="contato@hospedagem.com" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configurações de Coleta -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-cog"></i> Configurações de Coleta de Dados</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="frequencia">Frequência de Coleta *</label>
+                                    <select id="frequencia" name="frequencia" required>
+                                        <option value="">Selecione</option>
+                                        <option value="diaria">Diária</option>
+                                        <option value="semanal">Semanal</option>
+                                        <option value="quinzenal">Quinzenal</option>
+                                        <option value="mensal">Mensal</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="dataInicio">Data de Início da Coleta</label>
+                                    <input type="date" id="dataInicio" name="dataInicio">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="ativo" name="ativo" checked>
+                                        <span class="checkmark"></span>
+                                        Hospedagem ativa para coleta de dados
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Observações -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-sticky-note"></i> Observações</h3>
+                            
+                            <div class="form-group">
+                                <label for="observacoes">Observações Gerais</label>
+                                <textarea id="observacoes" name="observacoes" rows="4" placeholder="Informações adicionais sobre a hospedagem, particularidades para coleta de dados, etc."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="window.history.back()">
+                            <i class="fas fa-arrow-left"></i>
+                            Cancelar
+                        </button>
+                        
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i>
+                            Cadastrar Hospedagem
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="cadastro-hospedagem.js"></script>
+</body>
+</html>

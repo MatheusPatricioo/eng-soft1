@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Coleta de Dados - Lançar Ocupações</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="lancar-ocupacoes.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-hotel"></i>
+                <h1>Sistema de Coleta de Dados</h1>
+            </div>
+            <div class="user-info">
+                <span>Bem-vindo, Admin</span>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="page-header">
+                <h2><i class="fas fa-chart-bar"></i> Lançar Ocupações</h2>
+                <p class="subtitle">Registre os dados de ocupação das hospedagens</p>
+            </div>
+
+            <!-- Filtros e Seleção -->
+            <div class="filters-section">
+                <div class="filter-card">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="hospedagemSelect">Hospedagem *</label>
+                            <select id="hospedagemSelect" required>
+                                <option value="">Selecione a hospedagem</option>
+                                <option value="1">Hotel Belo Horizonte Centro</option>
+                                <option value="2">Pousada Serra Verde</option>
+                                <option value="3">Resort Águas Claras</option>
+                                <option value="4">Hostel Downtown</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="dataReferencia">Data de Referência *</label>
+                            <input type="date" id="dataReferencia" required>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="periodo">Período</label>
+                            <select id="periodo">
+                                <option value="diario">Diário</option>
+                                <option value="semanal">Semanal</option>
+                                <option value="mensal">Mensal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <button type="button" class="btn-load" onclick="carregarDados()">
+                                <i class="fas fa-search"></i>
+                                Carregar Dados
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informações da Hospedagem -->
+            <div class="hospedagem-info" id="hospedagemInfo" style="display: none;">
+                <div class="info-card">
+                    <div class="info-header">
+                        <h3><i class="fas fa-building"></i> Informações da Hospedagem</h3>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-item">
+                            <span class="label">Nome:</span>
+                            <span class="value" id="nomeHospedagem">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Tipo:</span>
+                            <span class="value" id="tipoHospedagem">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Capacidade Total:</span>
+                            <span class="value" id="capacidadeTotal">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Localização:</span>
+                            <span class="value" id="localizacao">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário de Ocupação -->
+            <div class="ocupacao-form" id="ocupacaoForm" style="display: none;">
+                <form id="formOcupacao">
+                    <div class="form-sections">
+                        <!-- Dados de Ocupação -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-bed"></i> Dados de Ocupação</h3>
+                            
+                            <div class="occupancy-grid">
+                                <div class="occupancy-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-door-open"></i>
+                                        <h4>Quartos/Unidades</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="form-group">
+                                            <label for="quartosDisponiveis">Disponíveis</label>
+                                            <input type="number" id="quartosDisponiveis" name="quartosDisponiveis" min="0" placeholder="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="quartosOcupados">Ocupados *</label>
+                                            <input type="number" id="quartosOcupados" name="quartosOcupados" min="0" placeholder="0" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="quartosManutencao">Em Manutenção</label>
+                                            <input type="number" id="quartosManutencao" name="quartosManutencao" min="0" placeholder="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="occupancy-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-users"></i>
+                                        <h4>Hóspedes</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="form-group">
+                                            <label for="hospedes">Total de Hóspedes *</label>
+                                            <input type="number" id="hospedes" name="hospedes" min="0" placeholder="0" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="checkins">Check-ins do Dia</label>
+                                            <input type="number" id="checkins" name="checkins" min="0" placeholder="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="checkouts">Check-outs do Dia</label>
+                                            <input type="number" id="checkouts" name="checkouts" min="0" placeholder="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="occupancy-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-percentage"></i>
+                                        <h4>Taxa de Ocupação</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="occupancy-display">
+                                            <div class="occupancy-value" id="taxaOcupacao">0%</div>
+                                            <div class="occupancy-label">Taxa Atual</div>
+                                        </div>
+                                        <div class="occupancy-bar">
+                                            <div class="occupancy-fill" id="occupancyBar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Informações Adicionais -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-info-circle"></i> Informações Adicionais</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="tarifaMedia">Tarifa Média (R$)</label>
+                                    <input type="number" id="tarifaMedia" name="tarifaMedia" step="0.01" min="0" placeholder="0,00">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="permanenciaMedia">Permanência Média (dias)</label>
+                                    <input type="number" id="permanenciaMedia" name="permanenciaMedia" step="0.1" min="0" placeholder="0,0">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="origemPrincipal">Origem Principal</label>
+                                    <select id="origemPrincipal" name="origemPrincipal">
+                                        <option value="">Selecione</option>
+                                        <option value="local">Local/Regional</option>
+                                        <option value="nacional">Nacional</option>
+                                        <option value="internacional">Internacional</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Observações -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-sticky-note"></i> Observações</h3>
+                            
+                            <div class="form-group">
+                                <label for="observacoes">Observações do Dia</label>
+                                <textarea id="observacoes" name="observacoes" rows="4" placeholder="Eventos especiais, situações atípicas, problemas operacionais, etc."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="limparFormulario()">
+                            <i class="fas fa-eraser"></i>
+                            Limpar
+                        </button>
+                        
+                        <button type="button" class="btn-draft">
+                            <i class="fas fa-save"></i>
+                            Salvar Rascunho
+                        </button>
+                        
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-check"></i>
+                            Confirmar Lançamento
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Histórico Recente -->
+            <div class="historico-section" id="historicoSection" style="display: none;">
+                <div class="historico-card">
+                    <div class="historico-header">
+                        <h3><i class="fas fa-history"></i> Últimos Lançamentos</h3>
+                    </div>
+                    <div class="historico-content">
+                        <div class="historico-item">
+                            <div class="historico-date">07/06/2025</div>
+                            <div class="historico-data">
+                                <span>Taxa: 85%</span>
+                                <span>Hóspedes: 142</span>
+                            </div>
+                            <div class="historico-status status-confirmed">Confirmado</div>
+                        </div>
+                        <div class="historico-item">
+                            <div class="historico-date">06/06/2025</div>
+                            <div class="historico-data">
+                                <span>Taxa: 78%</span>
+                                <span>Hóspedes: 134</span>
+                            </div>
+                            <div class="historico-status status-confirmed">Confirmado</div>
+                        </div>
+                        <div class="historico-item">
+                            <div class="historico-date">05/06/2025</div>
+                            <div class="historico-data">
+                                <span>Taxa: 92%</span>
+                                <span>Hóspedes: 158</span>
+                            </div>
+                            <div class="historico-status status-draft">Rascunho</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="lancar-ocupacoes.js"></script>
+</body>
+</html>
